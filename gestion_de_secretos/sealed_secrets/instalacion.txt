@@ -1,0 +1,30 @@
+Instalacion de sealed secrets
+-----------------------------
+
+$ brew install kubeseal
+
+Instalación y despliegue del controlador
+$ wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/controller.yaml
+$ kubectl apply -f controller.yaml
+
+Comprobar el estado
+$ kubectl get pods -n kube-system | grep sealed-secrets-controller
+
+Obtencion de la clave privada
+kubectl logs <nombre-controlador> -n kube-system
+
+Sellado de secretos
+-----------------------------
+Sellado de un secreto existente
+$ kubeseal --format=yaml < creacion_secreto.yaml > sealed-secret.yaml
+
+Deslpiegue en el cluster
+kubectl apply -f creacion_secreto_sellado.yaml 
+
+Observando de nuevo los pods del controlador se puede observar el estado del secreto
+
+Para obtener el secreto 
+$ kubectl get secrets
+
+El secreto esta listo para ser compartido
+

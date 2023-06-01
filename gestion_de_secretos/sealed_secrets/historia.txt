@@ -1,0 +1,168 @@
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % brew install kubeseal
+
+Warning: kubeseal 0.20.5 is already installed and up-to-date.
+To reinstall 0.20.5, run:
+  brew reinstall kubeseal
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % 5~5~5~5~5~5~
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % brew install kubeseal
+
+==> Downloading https://formulae.brew.sh/api/formula.jws.json
+########################################################################################## 100.0%
+==> Downloading https://formulae.brew.sh/api/cask.jws.json
+########################################################################################## 100.0%
+Warning: kubeseal 0.20.5 is already installed and up-to-date.
+To reinstall 0.20.5, run:
+  brew reinstall kubeseal
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/controller.yaml
+kubectl apply -f controller.yaml
+
+zsh: command not found: wget
+error: the path "controller.yaml" does not exist
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/controller.yaml
+zsh: command not found: wget
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % brew install wget
+==> Fetching dependencies for wget: openssl@3
+==> Fetching openssl@3
+==> Downloading https://ghcr.io/v2/homebrew/core/openssl/3/manifests/3.1.0
+########################################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/openssl/3/blobs/sha256:a6327ea42283c5fdc582b431d
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:a6327ea42283
+########################################################################################## 100.0%
+==> Fetching wget
+==> Downloading https://ghcr.io/v2/homebrew/core/wget/manifests/1.21.3_1-1
+########################################################################################## 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:f97fc2639cd9d2d037c2bf1a94fa66
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sha256:f97fc2639cd9
+########################################################################################## 100.0%
+==> Installing dependencies for wget: openssl@3
+==> Installing wget dependency: openssl@3
+==> Pouring openssl@3--3.1.0.monterey.bottle.tar.gz
+🍺  /usr/local/Cellar/openssl@3/3.1.0: 6,494 files, 29.9MB
+==> Installing wget
+==> Pouring wget--1.21.3_1.monterey.bottle.1.tar.gz
+🍺  /usr/local/Cellar/wget/1.21.3_1: 89 files, 4.2MB
+==> Running `brew cleanup wget`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/controller.yaml
+--2023-05-10 18:58:51--  https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/controller.yaml
+Resolviendo github.com (github.com)... 140.82.121.4
+Conectando con github.com (github.com)[140.82.121.4]:443... conectado.
+Petición HTTP enviada, esperando respuesta... 302 Found
+Localización: https://objects.githubusercontent.com/github-production-release-asset-2e65be/92702519/b07e7a54-e8d1-4e3d-b19c-287376f1bc54?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20230510%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230510T165852Z&X-Amz-Expires=300&X-Amz-Signature=596e0ddd5101296151523dcc19219a1b1dc35a5edb87adf6a77e3685bc10d5ce&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=92702519&response-content-disposition=attachment%3B%20filename%3Dcontroller.yaml&response-content-type=application%2Foctet-stream [siguiendo]
+--2023-05-10 18:58:52--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/92702519/b07e7a54-e8d1-4e3d-b19c-287376f1bc54?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20230510%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230510T165852Z&X-Amz-Expires=300&X-Amz-Signature=596e0ddd5101296151523dcc19219a1b1dc35a5edb87adf6a77e3685bc10d5ce&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=92702519&response-content-disposition=attachment%3B%20filename%3Dcontroller.yaml&response-content-type=application%2Foctet-stream
+Resolviendo objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.109.133, 185.199.108.133, 185.199.110.133, ...
+Conectando con objects.githubusercontent.com (objects.githubusercontent.com)[185.199.109.133]:443... conectado.
+Petición HTTP enviada, esperando respuesta... 200 OK
+Longitud: 5002 (4,9K) [application/octet-stream]
+Grabando a: «controller.yaml»
+
+controller.yaml          100%[===============================>]   4,88K  --.-KB/s    en 0,001s  
+
+2023-05-10 18:58:52 (8,74 MB/s) - «controller.yaml» guardado [5002/5002]
+
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl apply -f controller.yaml
+
+clusterrolebinding.rbac.authorization.k8s.io/sealed-secrets-controller created
+clusterrole.rbac.authorization.k8s.io/secrets-unsealer created
+serviceaccount/sealed-secrets-controller created
+rolebinding.rbac.authorization.k8s.io/sealed-secrets-service-proxier created
+role.rbac.authorization.k8s.io/sealed-secrets-key-admin created
+role.rbac.authorization.k8s.io/sealed-secrets-service-proxier created
+rolebinding.rbac.authorization.k8s.io/sealed-secrets-controller created
+deployment.apps/sealed-secrets-controller created
+customresourcedefinition.apiextensions.k8s.io/sealedsecrets.bitnami.com created
+service/sealed-secrets-controller created
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get pods -n kube-system | grep sealed-secrets-controller
+
+sealed-secrets-controller-77747c4b8c-5rpkq   0/1     ContainerCreating   0               7s
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get pods -n kube-system | grep sealed-secrets-controller
+
+sealed-secrets-controller-77747c4b8c-5rpkq   1/1     Running   0               19s
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl logs sealed-secrets-controller-84fcdcd5fd-9qb5j -n kube-system
+
+Error from server (NotFound): pods "sealed-secrets-controller-84fcdcd5fd-9qb5j" not found
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml
+
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV6RENDQXJTZ0F3SUJBZ0lRVDhRSk5KMjRZL052QTNETnNjb3Z1akFOQmdrcWhraUc5dzBCQVFzRkFEQUEKTUI0WERUSXpNRFV4TURFMk5Ua3hNRm9YRFRNek1EVXdOekUyTlRreE1Gb3dBRENDQWlJd0RRWUpLb1pJaHZjTgpBUUVCQlFBRGdnSVBBRENDQWdvQ2dnSUJBTldnMURTUFN5dFQ1eHptTzZCNnhveGhFYmFqTGQwWW9QeGdwQmZDCmlkdnc2aWxabkRvN3pRbXVkWEF6SFErSW0zbmNPYm54aDFwb09DY1dwVTYrVEhYVjBlUE5XazJpQjJZVTN6Z3kKOWdzclhXSTFqSmpxMUg3b0FEOWM2OEZyVFR6SFg3K2xZZ0V0akhwbm9tWGkrK2ZSbDgxV29JZnFjNzR0akNBWQpXOGpDUnJiVm4vNXoyaHNZaGRqN1h6QWY0ZzBVZFZwSHdaVHVjY0NUNWdGcFc0QWxUWGswY082REwvMFZ5QkFzCkR0MnpxdmpZcmw5M3Mzc1R3R0tzbmVoNXA0a0kzWVFNYTNmREgvNVZKMFgvbnNBNXlTTEREWVRTNXVpdmhHRUYKRkVoMjZnNm8zc3pXVnF2NmZtV0xUL0J1allKZFpBV0JWMGliRVprL3BCVlBtSkp4c1dCZEdyMHdLNjlveUtJSwoxRkVFbHg4bCs2eDE0WklxeFRYUGZNTys5WE1TL0FtOGtvbVFzb3lHR25mRVg1MHFXRDVvMzNnNUZrYmlIMUpJCkluckZRRDZTZUJaUnl6bTZTZHJyMitNbE1VM0YvaHJoMWR3RjJCQ05wRmQxSndiVHR5UFRINTNYalNFbitmdngKUGRhOTJ0QUdSYzJjRUsrd0pGSHlKc3VUalk5RkNSanhBWkV1aGFhY1JDa05qMk82emNuRGhlTzMxeElEUkhHcgpXbXY4Y0k5U0tHTUhuNHdKVDRFaGxqeFpUZVhqN29ocDJmWnlpNXlET1pldFQrd3NEeXNUMTJSTUkwNG5TUVovCnFCRHI1VklSOXcxU000bEF3cHBhWVdxVmdicW0xRlFmWUd3NzNwcCtnRUt1dGMwZXFuOS82djZiVmk1Yldlbk4KbkVsckFnTUJBQUdqUWpCQU1BNEdBMVVkRHdFQi93UUVBd0lBQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUIwRwpBMVVkRGdRV0JCUWJjUkh5OXV2NVBSV0NvWjd5NVoyck9Zc1RmVEFOQmdrcWhraUc5dzBCQVFzRkFBT0NBZ0VBCktsUmpjSFdKckxlMVFoeUk0bHBuN0VZUkxLZXBtZjc0YW5TdTRYOHZsNGhLRm5Bd1VnRjZuMGFVbWxFUmxiT3QKV29ZYU9nbllGcExNcW9kM1YxbXRSSzRUbGllYWJheGFyTG1kTlQ4R25XelhtRytNNGp6Umo0R3dzbk4zSnRKVApFTDltRkdlY3NwbDAvNUZtbTd0QTF3bkR2SnVZd1Vxdk1oOHZXY1k1Y0kvY05ncE9EdTQrSjlKekorME1YTTdmCm44WFU3SE1veko0dEZNZlgvZ0pRNU96cC9TOTY5QzBiSVA0T1hieDlVQ0NHaHhvV3VNTGs3UktkS3kvVFRKQmMKRDJHZ2FwNzlwQ2J1Z2l2SFA0bFl3MVo0TXpLZVFtOXJvSVRZRkU1bmJRWU5mZ3hlM3NWRUo2dXphN1dxd21TagpPSEdnT3MxV0dOUlZNWEtaOGwreGhRK2ZVamx3RHpZQTZvZlFDenlEbjF5WmpLbDg1K1pMbzkzd0J3V0VXdllQCkxxMUtVMUZyV1Bia3dlelVzZlErUzVLaDFIRDUzOEY3MCtYYVRSSnBLTGNUM1dBR3RaQ01ISVk3NC9rU0pDalAKcW9CTGorSUJoMVAza0hMdlF3OGZKSFMwWmtQdnBRZ2JTTmU2M00xYUFuVzd5Njg5WTR6WU9tTHM4ZWtTME0rdwpvYjcvZnhyM0ZmMitkRytyOVlEVjVYby84VXhDdm8yNmREOVJXSGswdXNCUXh4czdUUUhxaVF2ZVBJWjNQVjhpCldxdmtDRlRMbkJ0NHNJbkZFOC9TUzZOc2dNSFdBTTlJaUhmSFA2RUZLdCsxSjJONXNxd1ltV2JCQ3pQdk1KSG8KZUkvaUhxbVRXNkEvMk1Ua1dlSytPVUxsZnpaTFBaWFZkdDgzQk83LzFlQT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    tls.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS0FJQkFBS0NBZ0VBMWFEVU5JOUxLMVBuSE9ZN29IckdqR0VSdHFNdDNSaWcvR0NrRjhLSjIvRHFLVm1jCk9qdk5DYTUxY0RNZEQ0aWJlZHc1dWZHSFdtZzRKeGFsVHI1TWRkWFI0ODFhVGFJSFpoVGZPREwyQ3l0ZFlqV00KbU9yVWZ1Z0FQMXpyd1d0TlBNZGZ2NlZpQVMyTWVtZWlaZUw3NTlHWHpWYWdoK3B6dmkyTUlCaGJ5TUpHdHRXZgovblBhR3hpRjJQdGZNQi9pRFJSMVdrZkJsTzV4d0pQbUFXbGJnQ1ZOZVRSdzdvTXYvUlhJRUN3TzNiT3ErTml1ClgzZXpleFBBWXF5ZDZIbW5pUWpkaEF4cmQ4TWYvbFVuUmYrZXdEbkpJc01OaE5MbTZLK0VZUVVVU0hicURxamUKek5aV3EvcCtaWXRQOEc2TmdsMWtCWUZYU0pzUm1UK2tGVStZa25HeFlGMGF2VEFycjJqSW9nclVVUVNYSHlYNwpySFhoa2lyRk5jOTh3NzcxY3hMOENieVNpWkN5aklZYWQ4UmZuU3BZUG1qZmVEa1dSdUlmVWtnaWVzVkFQcEo0CkZsSExPYnBKMnV2YjR5VXhUY1grR3VIVjNBWFlFSTJrVjNVbkJ0TzNJOU1mbmRlTklTZjUrL0U5MXIzYTBBWkYKelp3UXI3QWtVZklteTVPTmowVUpHUEVCa1M2RnBweEVLUTJQWTdyTnljT0Y0N2ZYRWdORWNhdGFhL3h3ajFJbwpZd2VmakFsUGdTR1dQRmxONWVQdWlHblo5bktMbklNNWw2MVA3Q3dQS3hQWFpFd2pUaWRKQm4rb0VPdmxVaEgzCkRWSXppVURDbWxwaGFwV0J1cWJVVkI5Z2JEdmVtbjZBUXE2MXpSNnFmMy9xL3B0V0xsdFo2YzJjU1dzQ0F3RUEKQVFLQ0FnQjYrOURPeFdPditPaUhRYUE0SGhacHdJUXpFYlFZb2RJa0dQcSsxdmNJa0tRdDAvSFZzSkcwcmlQYgp5UUZFN1E4YzA0VEVJR0VjMGZ6cHUrYkU4MWNQUzE0KzkveXh6c0xWcU5SdEJTR1NnbytMTjJyT3FmcFZhUGlqCmdib1RxdE5YVnl3dkoyWEphZENDczJEUnFSLytjRElsTzJiRmVGclR0R01FSXlITDdOUks4NmJkRlJNT0lFc0cKQklqaktxZTNnZnloVWNnSEZsS1VYRkRBcFVmUStTaWx5MlBzVzhmbnVuOW5tQVdpNm9sV0kyQVhnOURtM1JNWAplMnFZNkZoajBwKzhJbTVJRHlRL0JnVExEb0wxQlE5ZkhNMk9sdC9xT3dsSjFXTzg2QUNOR2ZqU0VkN3B1UmJGCkhMT1RwZ0YvZUlaWmlRR1h3ZllhdElHZzV5YmNzY1BaS2JNaCtuRjh4eHFWZlh3OWlUa3NDaEtQYWQ2eWpkYmwKVmhmR0ZxQjY2TkMwbTZWTWtESXAzNzJMZzdZKzFIQTBiMnRtZ2xlRHBNeDJXWjFScDNMYk9jdWRDVXZwbGlCMQpMTVp2MVh3VlBKd2d5TVhFQ1FaUjVWQ0Z0Vk91ays5d3U2ZFBSWnVwM0QwbXZHYWZTMEtXckU2TWYxV0JJQzJ5CjF0S3k5c3BiZkhmdGdsYkpqSWoyS0h0eWJzVmZXSW5wNVZyNm85NHhhVzRDNVZjMzhIZi9MYlhuR2NEUlFIK1AKOG53L3B2T0c0U1dLbGpDNmRZQU5lZkY2ZU80dHRHeVp1OFE1ck1tUDZlRnRzQ1Y4Y05FQ09LV1ZUdDd2SEdyZgppRzRlakQyOStNcW8vQi9HZUJxUWowUEhRaDlvSEc5SVg4REcwYlJXNnM3MmRkYnlrUUtDQVFFQTE2ZnVVQnFDCmtjOU12d1dJR2Q1algzOHVYZEZoVHlxdkdDdTZRekFJODJ4bHVjVnZVc3JyVytpb0FNRGZUMWhad3AvUTZGK2EKYVhGSDdSZTkrZXYvNjVwQlEyYm9HL25RZUhuRHZia1NPcWRyc3YyMWphUk5IMnVFM1plL1dVbkVJL3FyUGFwOApwdVdDVnJHaklRYndFYjhNR3lzbkRvOWluSktFa05ORi9YT1hqNlJJeFNIcjlZbEhQcGlFSEZiQVUyZVRkOHBPClVZRDl3KzhhZFBoanpVR1JZcWVXM3ZmYzZCVnU0Z0I0dnVxdkc0cWpPSVRUdUFrSVNuMU9rVlU4R2tNN2kzRmEKWFYwWlowOWFSdEw1MXBxOCt4ekNqdW9jM1VQRW5XMDV3T0twL3l4aTZFOHZ2dlpJQlBZbEgvdXorR1p4ayszKwpaUkowSU9hSDl1M1hDUUtDQVFFQS9aZkpYYi83VjZmVjd2U1lkd25scDlEK0RWbWpPamJqTkdoRXBGd0NQMk9yCkxZRmsxMmNRRHh5eSs0b0JwWmVHOThWSlg0WTgvditjMzk5ZWVKR0hjZlcySFNEL2ZwakUwdEhhUi92TC8xWDkKMWE1UnFMOVdRR29ENnUyNG9hamRsdEJlR2JWTVQ0NGVTUmljN1RFV2s2czUxVFRuYTV6aS80K2pQWWZQYlR0WApvRE5pQm1CY3JEZElzMEZhcnVkWnRjbUxnTURlaTZ0eThCZXgwNm53b012QTU0WHI3N2JDeHhZWHpHSlBqQkFPCkt5ajBLMlp1Ly9KWWNacFNteGljOVUycFZJOUlnWXRDQzhPVmRDSldCeGYxSDN3ZXdERHNDeXBZZGRjWWg3cW8KdmdRUFlING4wK1RadEtFNnJITFRGOUZCb0FOVm1CUlNWUFJqVWJIbDB3S0NBUUVBa2FOOFlxWjBsVW45RjJnQgo4UTVwNTkwNUQrek9IYXZDMGJ6K0xrK3JTOUZocGFLN09wdUZkTzFiUUI4QThGSEhWSk9mZnI3SnhmblZ6RDFqCmMvdTRPb0ZUSDlUSVhkUkl3SVBpK0NhYk0vZEsyWGRUZTlPQXJmNXJuVWJVMTlUa1hEUDJIMUFhbkkrVWhUMnoKNENNU1Q3bkkwRFJGVFNUeVFMRUdTOVFTaVViZURRaXlpRWNQVmlPZWRKeUZZNm9HZW8wUlh5M0YxRzhiY1kzeApQUnRlTXdqYnlWZEtvVXVjNlROSVRlSnBxTzFPMG5lL0lQVTdFaWN2YlRiUXIzOXpkbnovSW4ycnZDK2FiMVY4CnJ5WGR5ZHQ0VXRHcVp0K2VIS09lalg1dEtXRXAwd1ZEeW9Wbnhqd0dpU3MrQ1NwdjhRb21HL1AzQUlVRTNnOHgKdFVZTUdRS0NBUUJ6dmt1U0ZvWEpSRGxJanlybmFnVC95MHVwSERoNzRZRmg4aFVpVHp4WFlrNUd2c0FmOEZKTQpFM1U5aVllbTVMb2RiRlpJMnlRTDN1N2kzemhuSDBVS3BuTXdhRmMwbU5WOHczczFUNStVTXROZ0srZnBkU3NRCnkxSnViNEhOaHgxY01FNUN2WlRPMnJiSDlndnAxblhQZ0Y4dENMQjNWV3ZsNk5GQXpEUElUMFYzUVB5RW5JYXYKczZ2aTVQbFd5eEVPLzZaRVpjTXRURnR4YWQ4b0ZIQlhjNmZnQkNmamlTN3RYeEFOb1BGZHBCWlRiS1hGQ1VPdwpYaFF3QlplZVltV0JNS2tRaHpVNHF5N0IzOHJlN3EwRkg5SXBSS1ZrWXUvWlNNS0hSbDFUMWNZZXRBdXdwdVBXCnVxVUM1SE83TWMxWEdaTXlUVk5MempxbHU4VjVEQkV4QW9JQkFCNEdsdzNubERIaTZ2bWdBR1JoQnFURkNaUjkKbStZOC9XMWFPUXJhQkVsNnprcHdHaWk4NjRxeFVqNmJMRmdkcWxtclJQdGVJZy9QOUxMeW1NSldUS1ZoZnY0RAphZ0RWZ1k3RlFsQTFSQURvZ1dKTzcvNkdsME8yb3c3VTROUUdaOEtrY1IxV3IwdmhTSHY5RWVsRzYzNWNjWmNWClFscDJlaDNUVFJLdkcyMml5dmp4a1hiMk1tdndEMklHQ1ljOVV5MzVrV2EySWZIUXc3TFh6cXdKdkNQMFJjb3AKbkV1RHhOa1pMUko3U2EzZ1ZoeHNXdEtubkJ3Y1F2eGdTMkJxbC92YlpGQk01N3dvcEZ3cWphTFdxcDlJTXRTZwpHU1pJaHFxQWNTSlNvM0c5cjB6WG9uaDQ2aDV1UnJxdUFmN21ETXMvODBDRlcwYXNmNlA3QXE1Y3hDWT0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K
+  kind: Secret
+  metadata:
+    creationTimestamp: "2023-05-10T16:59:10Z"
+    generateName: sealed-secrets-key
+    labels:
+      sealedsecrets.bitnami.com/sealed-secrets-key: active
+    name: sealed-secrets-key744sn
+    namespace: kube-system
+    resourceVersion: "819"
+    uid: 13e7cb80-0559-4927-941f-e4b45eb5af84
+  type: kubernetes.io/tls
+kind: List
+metadata:
+  resourceVersion: ""
+oscaranadon@MacBook-Air-de-Oscar ~ % cd environment
+cd: no such file or directory: environment
+oscaranadon@MacBook-Air-de-Oscar ~ % cd
+oscaranadon@MacBook-Air-de-Oscar ~ % cd /Users/oscaranadon/Desktop/TFG/gestion_de_secretos/sealed_secrets
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get secret
+NAME                  TYPE                                  DATA   AGE
+default-token-5lwtd   kubernetes.io/service-account-token   3      16m
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubeseal -format=yaml <creacion_secreto.yaml > creacion_secreto_sellado.yaml
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % cat creacion_secreto
+cat: creacion_secreto: No such file or directory
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % cat creacion_secreto.yaml 
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  username: dXN1YXJpb09zY2Fy
+  password: cGFzc3dvcmROb3RTYWZl
+  %                                                                                              oscaranadon@MacBook-Air-de-Oscar sealed_secrets %  cat creacion_secreto_sellado.yaml 
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubeseal -format=yaml < creacion_secreto.yaml > creacion_secreto_sellado.yaml
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % cat creacion_secreto_sellado.yaml 
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubeseal --format=yaml < creacion_secreto.yaml > creacion_secreto_sellado.yaml
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % cat creacion_secreto_sellado.yaml 
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: mysecret
+  namespace: default
+spec:
+  encryptedData:
+    password: AgAHgUrLqXMANIiViBUO06ZH7VkN/8cA6rd1a3I4M4pW6p5QbajpMrIk+3jnDO6a58+2YvoXzVCvbB93tAcaWUvx9FupafONGWmFoqBKmjrakhmZZ7rz2YPxDZkXjTzHUgVEr52f4mIVTGEUQsKf43rFuKxq7h+UXocH8dK/TVyvWIUiBYS+a3gfKNNvxG4jH16nzbhrTvhkwEXECrDSvh1MjZ2+b5fxjk0rVyzb1nop1Zm8jJ7mEKZHyJUznzq+znePgGPmGeZYvUFlBVkEixfNlUMwuLKbBhayK3xPIzTzbAvVsCi4dx7yp+mUOMXv/jv6xPe8K/6A2PJmhx/aqOQrEMmJC8yQIKoa/6q0Xd8TmIiEd49QUgVffLQVUjoVbSV1SOsc9QYq5FsEPreDdxBsSVEB7Mye6nGfpgWBRTUwPXdVtDMQc/cgUvAMsHPttlTYUKEMMID9oi/UAuc05uVlsmntyUPvXZWECWxCCLVARKrQZzO2FTCbYRVEK2qRpDzgHyWV/P2czHNNWOhIckPu0cgFKXnVVNkovZxBZiXiHKflGLBan4W3FkcU3j6W5L20cSYdOaWLtp22GYY4qwSJ5ujO3vT6FAoAiq5aSRITmbDrNc7AR0wWIZPRHyYHTGN6iJQa9x0+8lMK7t+v8mJKCTLDMSn0HrC15g0QuDnJGt0WrVDi3xxDBtNCl2bsSZdCUP7qFtVE4hMY7UVPAvI=
+    username: AgAVbE2pR7Lo2kcHqL5Rr33Rw1s0lQeIlJeYJU+cIAllgl05L9flSLvkNIJufvLRJv0WcT78pjkiTE8gCHUzJAPFAHhH4cYHmjFbfsez6gt0R1C8kQubyWZcszGdCTzYLiquhQjA9Fao0Kz7HC5skWkK+FHoWTy/E8y7Dj8tg6THNNtN4WmGAU7iHZpmSK/6BRlPVMph3bmIvQFL3sR6BXWy9IX7FsMtpTVDa7DwHuD2hbP/oryu1alDDtplE/fgIwDcHY1DUvdvwPp6J9NIqTjPdk2PcUD7wvm5/HEqQr3NFrgqgnKmWFM+s9Jh5JS5eSOdqi7dU/GuLS0XpVDx3rlYsMP+E/zI1fQqCdM5wUf7/tfzG4bz91uinihiqKRTIYu+vuLriwGzOgv349ey1NE/+zqop7/Caccbh3+J7WlD4h6UO40FfIlXCEW5QB6IkE7ExkQD41ouJJQYqCwy3RXuhNGkBRQfqRjIcpgjH1U4HYUGpQ2VGKK8/aCaP8H9htWGkXw9JuAAOFx2d6ESpssIMSj9k0R+BPzRu+7CeBHZOp64NsNdKo4mPO4bRtgq2cajGdREyVRto9qPGBPFCHPM+RVNcPypGi6EGUyGeh0wgvtPsInG2DhBAzcPbRGGhlAk0FZdVaIaAYLTVBwJ3kOzWjs7Or3pgd2ARinaH46DqtepjZdIun1Dihot/oolIWLhoy8wzKrDz5kZk/8=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: mysecret
+      namespace: default
+    type: Opaque
+
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl apply -f sealed-secret.yaml 
+
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl apply -f creacion_secreto_sellado.yaml
+sealedsecret.bitnami.com/mysecret created
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl logs -n kube-system sealed-secrets-controller-7bdbc75d47-5wxvf
+
+Error from server (NotFound): pods "sealed-secrets-controller-7bdbc75d47-5wxvf" not found
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get secret -n
+error: flag needs an argument: 'n' in -n
+See 'kubectl get --help' for usage.
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get secret -n
+error: flag needs an argument: 'n' in -n
+See 'kubectl get --help' for usage.
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % 
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % 
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % 
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % kubectl get secrets
+NAME                  TYPE                                  DATA   AGE
+default-token-5lwtd   kubernetes.io/service-account-token   3      22m
+mysecret              Opaque                                2      119s
+oscaranadon@MacBook-Air-de-Oscar sealed_secrets % 

@@ -1,0 +1,11 @@
+# Permite al usuario oscarUser leer los recurso del namespace espacioSecreto
+# La configuración del kubelet debe incluir el parámetro --authorization-mode=ABAC 
+# El archivo de política ABAC debe estar configurado en --authorization-policy-file=<file_route>
+apiVersion: abac.authorization.kubernetes.io/v1beta1
+kind: Policy
+spec:
+  user: oscarUser
+  namespace: espacioSecreto
+  apiVersion: "*"
+  nonResourceURLs: ["*"]
+  permission: "read"

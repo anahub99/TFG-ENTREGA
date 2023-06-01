@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mtls-demo
+  name: redis-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis-server
+  template:
+    metadata:
+      labels:
+        name: redis-server
+    spec:
+      volumes:
+        - name: certs
+          secret:
+            secretName: redis-server-certificate
+      containers:
+        - name: redis-server
+          image: bitnami/redis:6.2.6
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - mountPath: /certs
+              name: certs
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: REDIS_TLS_ENABLED
+              value: "yes"
+            - name: REDIS_TLS_PORT
+              value: "6379"
+            - name: REDIS_TLS_CERT_FILE
+              value: "/certs/tls.crt"
+            - name: REDIS_TLS_KEY_FILE
+              value: "/certs/tls.key"
+            - name: REDIS_TLS_CA_FILE
+              value: "/certs/ca.crt"

@@ -1,0 +1,35 @@
+$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
+
+$ kubectl rollout status deployment/cert-manager -n cert-manager 
+
+$ kubectl apply -f issuer.yaml
+
+$ kubectl wait --for=condition=Ready=True issuer bootstrap-issuer -n mtls-demo
+
+$ kubectl apply -f bootrstap-issuer.yaml
+
+$ kubectl wait --for=condition=Ready=True cert root-certificate -n mtls-demo
+
+$ kubectl apply -f root-issuer.yaml
+
+$ kubectl wait --for=condition=Ready=True issuer root-issuer -n mtls-demo
+
+$ kubectl apply -f serer-certificate.yaml
+
+$ kubectl wait --for=condition=Ready=True cert redis-server-certificate -n mtls-demo
+
+$ kubectl apply -f client-certificate.yaml
+
+$ kubectl wait --for=condition=Ready=True cert redis-client-certificate -n mtls-demo
+
+$ kubectl apply -f deployment-server.yaml
+
+$ kubectl apply -f redis-secret.yaml
+
+$ kubectl port-forward svc/spring-boot-redis-client-app 8080:8080 -n mtls-demo
+
+# en otra terminal
+$ curl -XGET http://localhost:8080/
+.
+
+

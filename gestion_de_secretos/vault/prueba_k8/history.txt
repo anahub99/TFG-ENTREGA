@@ -1,0 +1,177 @@
+scaranadon@MacBook-Air-de-Oscar prueba_k8 % helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "sealed-secrets" chart repository
+...Successfully got an update from the "hashicorp" chart repository
+...Successfully got an update from the "gatekeeper" chart repository
+...Successfully got an update from the "kyverno" chart repository
+...Successfully got an update from the "falcosecurity" chart repository
+Update Complete. ⎈Happy Helming!⎈
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % helm search repo hashicorp/vault
+NAME           	CHART VERSION	APP VERSION	DESCRIPTION                   
+hashicorp/vault	0.24.1       	1.13.1     	Official HashiCorp Vault Chart
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % cat > helm-vault-raft-values.yml <<EOF
+server:
+  affinity: ""
+  ha:
+    enabled: true
+    raft:
+      enabled: true
+EOF
+
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % helm install vault hashicorp/vault --values helm-vault-raft-values.yml
+NAME: vault
+LAST DEPLOYED: Wed May 10 20:02:25 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+Thank you for installing HashiCorp Vault!
+
+Now that you have deployed Vault, you should look over the docs on using
+Vault with Kubernetes available here:
+
+https://www.vaultproject.io/docs/
+
+
+Your release is named vault. To learn more about the release, try:
+
+  $ helm status vault
+  $ helm get manifest vault
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get pods
+NAME                                    READY   STATUS              RESTARTS   AGE
+vault-0                                 0/1     ContainerCreating   0          9s
+vault-1                                 0/1     ContainerCreating   0          9s
+vault-2                                 0/1     ContainerCreating   0          9s
+vault-agent-injector-644f4c4757-4tdjq   0/1     ContainerCreating   0          10s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec vault-0 -- vault operator init \
+    -key-shares=1 \
+    -key-threshold=1 \
+    -format=json > cluster-keys.json
+
+error: unable to upgrade connection: container not found ("vault")
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get pods                             
+NAME                                    READY   STATUS    RESTARTS   AGE
+vault-0                                 0/1     Running   0          31s
+vault-1                                 0/1     Running   0          31s
+vault-2                                 0/1     Running   0          31s
+vault-agent-injector-644f4c4757-4tdjq   1/1     Running   0          32s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec vault-0 -- vault operator init \
+    -key-shares=1 \
+    -key-threshold=1 \
+    -format=json > cluster-keys.json
+
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % jq -r ".unseal_keys_b64[]" cluster-keys.json
+sRkJbP4Q9MQB9jdHXk8SnA1S915M5cvduwwP3PUPXUo=
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % touch root-key.json
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % open root-key.json 
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % VAULT_UNSEAL_KEY=$(jq -r ".unseal_keys_b64[]" cluster-keys.json)
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec vault-0 -- vault operator unseal $VAULT_UNSEAL_KEY
+Key                     Value
+---                     -----
+Seal Type               shamir
+Initialized             true
+Sealed                  false
+Total Shares            1
+Threshold               1
+Version                 1.13.1
+Build Date              2023-03-23T12:51:35Z
+Storage Type            raft
+Cluster Name            vault-cluster-ac0d4be9
+Cluster ID              198b3df7-eaaf-900a-a2cd-661334e003d5
+HA Enabled              true
+HA Cluster              https://vault-0.vault-internal:8201
+HA Mode                 active
+Active Since            2023-05-10T18:05:50.609054736Z
+Raft Committed Index    36
+Raft Applied Index      36
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec -ti vault-1 -- vault operator raft join http://vault-0.vault-internal:8200
+Key       Value
+---       -----
+Joined    true
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec -ti vault-2 -- vault operator raft join http://vault-0.vault-internal:8200
+Key       Value
+---       -----
+Joined    true
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec -ti vault-1 -- vault operator unseal $VAULT_UNSEAL_KEY
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        true
+Sealed             true
+Total Shares       1
+Threshold          1
+Unseal Progress    0/1
+Unseal Nonce       n/a
+Version            1.13.1
+Build Date         2023-03-23T12:51:35Z
+Storage Type       raft
+HA Enabled         true
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec -ti vault-2 -- vault operator unseal $VAULT_UNSEAL_KEY
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        true
+Sealed             true
+Total Shares       1
+Threshold          1
+Unseal Progress    0/1
+Unseal Nonce       n/a
+Version            1.13.1
+Build Date         2023-03-23T12:51:35Z
+Storage Type       raft
+HA Enabled         true
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % jq -r ".root_token" cluster-keys.json
+hvs.lFlhGIHpcBeSm1DDEROIZwh9
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec --stdin=true --tty=true vault-0 -- /bin/sh
+/ $ vault login
+Token (will be hidden): 
+Success! You are now authenticated. The token information displayed below
+is already stored in the token helper. You do NOT need to run "vault login"
+again. Future Vault requests will automatically use this token.
+
+Key                  Value
+---                  -----
+token                hvs.lFlhGIHpcBeSm1DDEROIZwh9
+token_accessor       jqVZ0UTF6m9XbvDK87fYwqYb
+token_duration       ∞
+token_renewable      false
+token_policies       ["root"]
+identity_policies    []
+policies             ["root"]
+/ $ vault secrets enable -path=secret kv-v2
+Success! Enabled the kv-v2 secrets engine at: secret/
+/ $ $ vault kv put secret/webapp/config username="oscarUser" password="safePassword"
+/bin/sh: $: not found
+/ $ vault kv put secret/webapp/config username="oscarUser" password="safePassword"
+====== Secret Path ======
+secret/data/webapp/config
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2023-05-10T18:07:55.824708699Z
+custom_metadata    <nil>
+deletion_time      n/a
+destroyed          false
+version            1
+/ $ vault kv put secret/webapp/config username="oscarUser" password="safePassword"
+====== Secret Path ======
+secret/data/webapp/config
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2023-05-10T18:08:07.383536866Z
+custom_metadata    <nil>
+deletion_time      n/a
+destroyed          false
+version            2
+/ $ exit
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get secrets
+NAME                               TYPE                                  DATA   AGE
+default-token-5lwtd                kubernetes.io/service-account-token   3      76m
+mysecret                           Opaque                                2      55m
+sh.helm.release.v1.vault.v1        helm.sh/release.v1                    1      5m55s
+vault-agent-injector-token-hs7sz   kubernetes.io/service-account-token   3      5m55s
+vault-token-ww2n6                  kubernetes.io/service-account-token   3      5m55s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % cat vault-token-ww2n6  

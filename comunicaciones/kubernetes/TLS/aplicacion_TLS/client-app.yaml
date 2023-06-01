@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spring-boot-redis-client-app
+  name: spring-boot-redis-client-app
+  namespace: mtls-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-redis-client-app
+  template:
+    metadata:
+      labels:
+        app: spring-boot-redis-client-app
+    spec:
+      containers:
+        - image: ddubson/spring-boot-redis-mtls-demo:basic
+          name: spring-boot-redis-client-app
+          env:
+            - name: SPRING_REDIS_HOST
+              value: "redis-server"
+            - name: SPRING_REDIS_PORT
+              value: "6379"
+          ports:
+            - containerPort: 8080
+              name: app-port
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: app-port
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: app-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: spring-boot-redis-client-app
+  name: spring-boot-redis-client-app
+  namespace: mtls-demo
+spec:
+  ports:
+    - name: service-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: spring-boot-redis-client-app
+  type: ClusterIP

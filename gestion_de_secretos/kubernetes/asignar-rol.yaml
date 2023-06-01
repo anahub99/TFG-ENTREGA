@@ -1,0 +1,14 @@
+# vincula el usuario oscarUser con el objeto Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: secret-reader-binding
+  namespace: espacio-secretos
+subjects:
+- kind: User
+  name: oscarUser
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io

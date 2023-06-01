@@ -1,0 +1,3 @@
+En cuanto al empleo de politicas para contral que imagenes se usan, un a politica muy practica es block-stale-images. Esta impide que se creen contenidos cuya imagen ha sido construida hace un periodo de tiempo concreto, pudiendo este ser especificado por el usuario, por defecto son 6 meses. 
+
+Las imagenes con cierto suelen tener brechas de seguridad abiertas, es mas seguro trabajar son versiones recientes y que ademas cuentan con un desarrollo continuo. (link https://kyverno.io/policies/other/block_stale_images/block-stale-images/)

@@ -1,0 +1,11 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sNamespace
+metadata:
+  name: deny-pruebaname-namespace
+spec:
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+  excludedNamespaces:
+  - pruebaname

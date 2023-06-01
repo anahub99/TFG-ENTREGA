@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: latest-pod
+  namespace: gatekeeper-system
+  labels:
+    app: my-app
+    latest: v1
+  annotations:
+    "constraint.gatekeeper.sh/match": "exactly"
+spec:
+  containers:
+  - name: my-container
+    image: nginx:latestv

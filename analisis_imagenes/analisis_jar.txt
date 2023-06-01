@@ -1,0 +1,416 @@
+7+Error: unknown command "roofts" for "trivy"
+Usage:
+  trivy [global flags] command [flags] target
+  trivy [command]
+
+Examples:
+  # Scan a container image
+  $ trivy image python:3.4-alpine
+
+  # Scan a container image from a tar archive
+  $ trivy image --input ruby-3.1.tar
+
+  # Scan local filesystem
+  $ trivy fs .
+
+  # Run in server mode
+  $ trivy server
+
+Available Commands:
+  aws         [EXPERIMENTAL] Scan AWS account
+  completion  Generate the autocompletion script for the specified shell
+  config      Scan config files for misconfigurations
+  filesystem  Scan local filesystem
+  help        Help about any command
+  image       Scan a container image
+  kubernetes  [EXPERIMENTAL] Scan kubernetes cluster
+  module      Manage modules
+  plugin      Manage plugins
+  repository  Scan a remote repository
+  rootfs      Scan rootfs
+  sbom        Scan SBOM for vulnerabilities
+  server      Server mode
+  version     Print the version
+  vm          [EXPERIMENTAL] Scan a virtual machine image
+
+Flags:
+      --cache-dir string          cache directory (default "/Users/oscaranadon/Library/Caches/trivy")
+  -c, --config string             config path (default "trivy.yaml")
+  -d, --debug                     debug mode
+  -f, --format string             version format (json)
+      --generate-default-config   write the default config to trivy-default.yaml
+  -h, --help                      help for trivy
+      --insecure                  allow insecure server connections
+  -q, --quiet                     suppress progress bar and log output
+      --timeout duration          timeout (default 5m0s)
+  -v, --version                   show version
+
+Use "trivy [command] --help" for more information about a command.
+
+2023-05-12T13:22:47.961+0200	FATAL	unknown command "roofts" for "trivy"
+oscaranadon@MacBook-Air-de-Oscar ola % ls                                            
+acciona-ov-back-invoice-1.0.0.jar
+oscaranadon@MacBook-Air-de-Oscar ola % trivy rootfs acciona-ov-back-invoice-1.0.0.jar 
+2023-05-12T13:23:09.256+0200	INFO	Vulnerability scanning is enabled
+2023-05-12T13:23:09.256+0200	INFO	Secret scanning is enabled
+2023-05-12T13:23:09.256+0200	INFO	If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2023-05-12T13:23:09.256+0200	INFO	Please see also https://aquasecurity.github.io/trivy/v0.41/docs/secret/scanning/#recommendation for faster secret detection
+2023-05-12T13:23:09.260+0200	INFO	JAR files found
+2023-05-12T13:23:09.261+0200	INFO	Java DB Repository: ghcr.io/aquasecurity/trivy-java-db:1
+2023-05-12T13:23:09.261+0200	INFO	Downloading the Java DB...
+427.12 MiB / 427.12 MiB [------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 100.00% 14.39 MiB p/s 30s
+2023-05-12T13:23:40.800+0200	INFO	The Java DB is cached for 3 days. If you want to update the database more frequently, the '--reset' flag clears the DB cache.
+2023-05-12T13:23:40.812+0200	INFO	Analyzing JAR files takes a while...
+2023-05-12T13:23:41.958+0200	INFO	Number of language-specific files: 1
+2023-05-12T13:23:41.958+0200	INFO	Detecting jar vulnerabilities...
+2023-05-12T13:23:42.084+0200	INFO	Table result includes only package filenames. Use '--format json' option to get the full path to the package file.
+
+Java (jar)
+
+Total: 76 (UNKNOWN: 3, LOW: 4, MEDIUM: 34, HIGH: 24, CRITICAL: 11)
+
+┌──────────────────────────────────────────────────────────────┬─────────────────────┬──────────┬───────────────────┬─────────────────────────────────────────────────┬──────────────────────────────────────────────────────────────┐
+│                           Library                            │    Vulnerability    │ Severity │ Installed Version │                  Fixed Version                  │                            Title                             │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ ch.qos.logback:logback-core                                  │ CVE-2021-42550      │ MEDIUM   │ 1.2.3             │ 1.2.9                                           │ logback: remote code execution through JNDI call from within │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ its configuration file...                                    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-42550                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ com.fasterxml.jackson.core:jackson-databind                  │ CVE-2020-36518      │ HIGH     │ 2.11.0            │ 2.12.6.1, 2.13.2.1                              │ denial of service via a large depth of nested objects        │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-36518                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-46877      │          │                   │ 2.12.6, 2.13.1                                  │ Possible DoS if using JDK serialization to serialize         │
+│                                                              │                     │          │                   │                                                 │ JsonNode                                                     │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-46877                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-42003      │          │                   │ 2.12.7.1, 2.13.4.1                              │ deep wrapper array nesting wrt UNWRAP_SINGLE_VALUE_ARRAYS    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-42003                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-42004      │          │                   │ 2.12.7.1, 2.13.4                                │ use of deeply nested arrays                                  │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-42004                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ com.fasterxml.woodstox:woodstox-core                         │ CVE-2022-40151      │          │ 6.2.0             │ 5.4.0, 6.4.0                                    │ Xstream to serialise XML data was vulnerable to Denial of    │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ Service attacks...                                           │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-40151                   │
+│                                                              ├─────────────────────┤          │                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-40152      │          │                   │                                                 │ woodstox to serialise XML data was vulnerable to Denial of   │
+│                                                              │                     │          │                   │                                                 │ Service attacks...                                           │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-40152                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ com.google.code.gson:gson                                    │ CVE-2022-25647      │          │ 2.8.6             │ 2.8.9                                           │ Deserialization of Untrusted Data in                         │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ com.google.code.gson-gson                                    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-25647                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ com.google.guava:guava (acciona-ov-back-invoice-1.0.0.jar)   │ CVE-2020-8908       │ LOW      │ 29.0-android      │ 30.0                                            │ guava: local information disclosure via temporary directory  │
+│                                                              │                     │          │                   │                                                 │ created with unsafe permissions                              │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-8908                    │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ commons-fileupload:commons-fileupload                        │ CVE-2023-24998      │ HIGH     │ 1.4               │ 1.5                                             │ FileUpload DoS with excessive parts                          │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2023-24998                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ io.springfox:springfox-swagger-ui                            │ CVE-2019-17495      │ CRITICAL │ 2.9.2             │ 2.10.0                                          │ Cross-site scripting in Swagger-UI                           │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2019-17495                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ junit:junit (acciona-ov-back-invoice-1.0.0.jar)              │ CVE-2020-15250      │ MEDIUM   │ 4.13              │ 4.13.1                                          │ junit4: TemporaryFolder is shared between all users across   │
+│                                                              │                     │          │                   │                                                 │ system which could result...                                 │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-15250                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.apache.ant:ant (acciona-ov-back-invoice-1.0.0.jar)       │ CVE-2021-36373      │          │ 1.9.15            │ 1.9.16, 1.10.11                                 │ ant: excessive memory allocation when reading a specially    │
+│                                                              │                     │          │                   │                                                 │ crafted TAR archive                                          │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-36373                   │
+│                                                              ├─────────────────────┤          │                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-36374      │          │                   │                                                 │ ant: excessive memory allocation when reading a specially    │
+│                                                              │                     │          │                   │                                                 │ crafted ZIP archive or...                                    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-36374                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.apache.httpcomponents:httpclient                         │ CVE-2020-13956      │          │ 4.5.12            │ 4.5.13                                          │ apache-httpclient: incorrect handling of malformed authority │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ component in request URIs                                    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-13956                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.apache.tika:tika-core                                    │ CVE-2021-28657      │          │ 1.24.1            │ 1.26                                            │ tika-parsers: Infinite loop in MP3Parser                     │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-28657                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-30126      │          │                   │ 1.28.3, 2.4.0                                   │ tika-core: Regular Expression Denial of Service in standards │
+│                                                              │                     │          │                   │                                                 │ extractor                                                    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-30126                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-30973      │          │                   │ 1.28.3                                          │ tika-core: incomplete fix for CVE-2022-30126                 │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-30973                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-33879      │ LOW      │                   │ 1.28.4, 2.4.1                                   │ The initial fixes in CVE-2022-30126 and CVE-2022-30973 for   │
+│                                                              │                     │          │                   │                                                 │ regexes in ......                                            │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-33879                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.apache.tomcat.embed:tomcat-embed-core                    │ CVE-2020-13934      │ HIGH     │ 9.0.36            │ 8.5.57, 9.0.37                                  │ tomcat: OutOfMemoryException caused by HTTP/2 connection     │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ leak could lead to DoS                                       │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-13934                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2020-17527      │          │                   │ 8.5.60, 9.0.40, 10.0.2                          │ tomcat: HTTP/2 request header mix-up                         │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-17527                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-25122      │          │                   │ 8.5.62, 9.0.42, 10.0.2                          │ tomcat: Request mix-up with h2c                              │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-25122                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-25329      │          │                   │ 7.0.107, 8.5.61, 9.0.41                         │ tomcat: Incomplete fix for CVE-2020-9484 (RCE via session    │
+│                                                              │                     │          │                   │                                                 │ persistence)                                                 │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-25329                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-24122      │ MEDIUM   │                   │ 10.0.0-M10, 9.0.40, 8.5.60, 7.0.107             │ tomcat: Information disclosure when using NTFS file system   │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-24122                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-43980      │ LOW      │                   │                                                 │ Information disclosure                                       │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-43980                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.apache.tomcat.embed:tomcat-embed-websocket               │ CVE-2020-13935      │ HIGH     │                   │ 7.0.105, 8.5.57, 9.0.37, 10.0.2                 │ tomcat: multiple requests with invalid payload length in a   │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ WebSocket frame could...                                     │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-13935                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-24122      │ MEDIUM   │                   │ 10.0.0-M10, 9.0.40, 8.5.60, 7.0.107             │ tomcat: Information disclosure when using NTFS file system   │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-24122                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-43980      │ LOW      │                   │                                                 │ Information disclosure                                       │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-43980                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.bouncycastle:bcprov-jdk15on                              │ CVE-2020-15522      │ MEDIUM   │ 1.54              │ 1.66                                            │ bouncycastle: Timing issue within the EC math library        │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-15522                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.codehaus.groovy:groovy                                   │ CVE-2020-17521      │          │ 2.5.12            │ 2.4.21, 2.5.14, 3.0.7                           │ groovy: OS temporary directory leads to information          │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ disclosure                                                   │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-17521                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.codehaus.groovy:groovy-all                               │ CVE-2015-3253       │ CRITICAL │ 2.4.1             │ 2.4.4                                           │ groovy: remote execution of untrusted code in class          │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ MethodClosure                                                │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2015-3253                    │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2020-17521      │ MEDIUM   │                   │ 2.4.21, 2.5.14, 3.0.7                           │ groovy: OS temporary directory leads to information          │
+│                                                              │                     │          │                   │                                                 │ disclosure                                                   │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-17521                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.glassfish:jakarta.el (acciona-ov-back-invoice-1.0.0.jar) │ CVE-2021-28170      │          │ 3.0.3             │                                                 │ jakarta-el: ELParserTokenManager enables invalid EL          │
+│                                                              │                     │          │                   │                                                 │ expressions to be evaluate                                   │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-28170                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.hibernate:hibernate-core                                 │ CVE-2020-25638      │ HIGH     │ 5.4.17.Final      │ 5.3.20.Final, 5.4.24.Final                      │ hibernate-core: SQL injection vulnerability when both        │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ hibernate.use_sql_comments and JPQL String literals are...   │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2020-25638                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          ├───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.json:json (acciona-ov-back-invoice-1.0.0.jar)            │ CVE-2022-45688      │          │ 20160212          │ 20230227                                        │ json stack overflow vulnerability                            │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-45688                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.postgresql:postgresql                                    │ CVE-2022-21724      │ CRITICAL │ 42.2.14           │ 42.2.25, 42.3.2                                 │ jdbc-postgresql: Unchecked Class Instantiation when          │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ providing Plugin Classes                                     │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-21724                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-26520      │          │                   │ 42.3.3                                          │ postgresql-jdbc: Arbitrary File Write Vulnerability          │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-26520                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-31197      │ HIGH     │                   │ 42.2.26, 42.3.7, 42.4.1                         │ postgresql: SQL Injection in ResultSet.refreshRow() with     │
+│                                                              │                     │          │                   │                                                 │ malicious column names                                       │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-31197                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-41946      │ MEDIUM   │                   │ 42.2.27, 42.3.8, 42.4.3, 42.5.1                 │ Information leak of prepared statement data due to insecure  │
+│                                                              │                     │          │                   │                                                 │ temporary file permissions...                                │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-41946                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ GHSA-673j-qm5f-xpv8 │          │                   │ 42.3.3                                          │ pgjdbc Arbitrary File Write Vulnerability                    │
+│                                                              │                     │          │                   │                                                 │ https://github.com/advisories/GHSA-673j-qm5f-xpv8            │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework.boot:spring-boot-actuator-autoconfigure  │ CVE-2023-20873      │ CRITICAL │ 2.3.1.RELEASE     │ 2.7.11, 3.0.6                                   │ Spring Boot Security Bypass with Wildcard Pattern Matching   │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ on Cloud Foundry                                             │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2023-20873                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework.boot:spring-boot-starter-web             │ CVE-2022-22965      │          │                   │ 2.6.6, 2.5.12                                   │ spring-framework: RCE via Data Binding on JDK 9+             │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22965                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ GHSA-36p3-wjmg-h94x │ UNKNOWN  │                   │ 2.5.12, 2.6.6                                   │ Improper Neutralization of Special Elements used in an OS    │
+│                                                              │                     │          │                   │                                                 │ Command ('OS Command...                                      │
+│                                                              │                     │          │                   │                                                 │ https://github.com/advisories/GHSA-36p3-wjmg-h94x            │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework.cloud:spring-cloud-openfeign-core        │ CVE-2021-22044      │ HIGH     │ 2.2.3.RELEASE     │ 2.2.10.RELEASE, 3.0.5                           │ Exposure of Resource to Wrong Sphere in Spring Cloud         │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ OpenFeign                                                    │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22044                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework.security:spring-security-core            │ CVE-2022-22978      │ CRITICAL │ 5.3.3.RELEASE     │ 5.5.7, 5.6.4                                    │ springframework: Authorization Bypass in RegexRequestMatcher │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22978                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-22112      │ HIGH     │                   │ 5.2.9.RELEASE, 5.3.8.RELEASE, 5.4.4             │ jenkins: Privilege escalation vulnerability in bundled       │
+│                                                              │                     │          │                   │                                                 │ Spring Security library                                      │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22112                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-22119      │          │                   │ 5.2.11.RELEASE, 5.3.10.RELEASE, 5.4.7, 5.5.1    │ spring-security: Denial-of-Service (DoS) attack via          │
+│                                                              │                     │          │                   │                                                 │ initiation of Authorization Request                          │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22119                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-22976      │ MEDIUM   │                   │ 5.5.7, 5.6.4                                    │ springframework: BCrypt skips salt rounds for work factor of │
+│                                                              │                     │          │                   │                                                 │ 31                                                           │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22976                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework.security:spring-security-web             │ CVE-2021-22112      │ HIGH     │                   │ 5.2.9, 5.2.9, 5.4.4, 5.4.4                      │ jenkins: Privilege escalation vulnerability in bundled       │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ Spring Security library                                      │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22112                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework:spring-beans                             │ CVE-2022-22965      │ CRITICAL │ 5.2.7.RELEASE     │ 5.2.20.RELEASE, 5.3.18                          │ spring-framework: RCE via Data Binding on JDK 9+             │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22965                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ GHSA-36p3-wjmg-h94x │ UNKNOWN  │                   │ 5.2.20, 5.3.18                                  │ Improper Neutralization of Special Elements used in an OS    │
+│                                                              │                     │          │                   │                                                 │ Command ('OS Command...                                      │
+│                                                              │                     │          │                   │                                                 │ https://github.com/advisories/GHSA-36p3-wjmg-h94x            │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework:spring-core                              │ CVE-2021-22118      │ HIGH     │                   │ 5.2.15, 5.3.7                                   │ spring-web: (re)creating the temporary storage directory     │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ could result in a privilege...                               │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22118                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2023-20863      │          │                   │ 5.2.24.RELEASE, 5.3.27, 6.0.8                   │ Spring Expression DoS Vulnerability                          │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2023-20863                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2020-5421       │ MEDIUM   │                   │ 4.3.29.RELEASE, 5.0.19.RELEASE, 5.1.18.RELEASE, │ springframework: RFD protection bypass via jsessionid        │
+│                                                              │                     │          │                   │ 5.2.9.RELEASE                                   │ https://avd.aquasec.com/nvd/cve-2020-5421                    │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-22060      │          │                   │ 5.3.14, 5.3.14                                  │ springframework: Additional Log Injection in Spring          │
+│                                                              │                     │          │                   │                                                 │ Framework (follow-up to CVE-2021-22096)                      │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22060                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2021-22096      │          │                   │ 5.2.18, 5.3.11                                  │ springframework: malicious input leads to insertion of       │
+│                                                              │                     │          │                   │                                                 │ additional log entries                                       │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2021-22096                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-22950      │          │                   │ 5.2.20.RELEASE, 5.3.17                          │ spring-expression: Denial of service via specially crafted   │
+│                                                              │                     │          │                   │                                                 │ SpEL expression                                              │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22950                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-22968      │          │                   │ 5.2.21, 5.3.19                                  │ Spring Framework: Data Binding Rules Vulnerability           │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22968                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-22970      │          │                   │ 5.2.22.RELEASE, 5.3.20                          │ springframework: DoS via data binding to multipartFile or    │
+│                                                              │                     │          │                   │                                                 │ servlet part                                                 │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22970                   │
+│                                                              ├─────────────────────┤          │                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-22971      │          │                   │                                                 │ springframework: DoS with STOMP over WebSocket               │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22971                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2023-20861      │          │                   │ 5.3.26, 6.0.7, 5.2.23.RELEASE                   │ Spring Expression DoS Vulnerability                          │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2023-20861                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ GHSA-36p3-wjmg-h94x │ UNKNOWN  │                   │ 5.2.20, 5.3.18                                  │ Improper Neutralization of Special Elements used in an OS    │
+│                                                              │                     │          │                   │                                                 │ Command ('OS Command...                                      │
+│                                                              │                     │          │                   │                                                 │ https://github.com/advisories/GHSA-36p3-wjmg-h94x            │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework:spring-expression                        │ CVE-2022-22950      │ MEDIUM   │                   │ 5.2.20, 5.3.16                                  │ spring-expression: Denial of service via specially crafted   │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ SpEL expression                                              │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22950                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework:spring-web                               │ CVE-2016-1000027    │ CRITICAL │                   │ 6.0.0                                           │ spring: HttpInvokerServiceExporter readRemoteInvocation      │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ method untrusted java deserialization                        │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2016-1000027                 │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2020-5421       │ MEDIUM   │                   │ 4.3.29.RELEASE, 5.0.19.RELEASE, 5.1.18.RELEASE, │ springframework: RFD protection bypass via jsessionid        │
+│                                                              │                     │          │                   │ 5.2.9.RELEASE                                   │ https://avd.aquasec.com/nvd/cve-2020-5421                    │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.springframework:spring-webmvc                            │ CVE-2022-22965      │ CRITICAL │                   │ 5.2.20, 5.3.18                                  │ spring-framework: RCE via Data Binding on JDK 9+             │
+│ (acciona-ov-back-invoice-1.0.0.jar)                          │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22965                   │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2020-5421       │ MEDIUM   │                   │ 4.3.29.RELEASE, 5.0.19.RELEASE, 5.1.18.RELEASE, │ springframework: RFD protection bypass via jsessionid        │
+│                                                              │                     │          │                   │ 5.2.9.RELEASE                                   │ https://avd.aquasec.com/nvd/cve-2020-5421                    │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-22950      │          │                   │ 5.2.20.RELEASE, 5.3.17                          │ spring-expression: Denial of service via specially crafted   │
+│                                                              │                     │          │                   │                                                 │ SpEL expression                                              │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-22950                   │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.testng:testng (acciona-ov-back-invoice-1.0.0.jar)        │ CVE-2022-4065       │ HIGH     │ 6.13.1            │                                                 │ testng: a path traversal in zip files                        │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-4065                    │
+├──────────────────────────────────────────────────────────────┼─────────────────────┼──────────┼───────────────────┼─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ org.yaml:snakeyaml (acciona-ov-back-invoice-1.0.0.jar)       │ CVE-2022-1471       │ CRITICAL │ 1.26              │ 2.0                                             │ Constructor Deserialization Remote Code Execution            │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-1471                    │
+│                                                              ├─────────────────────┼──────────┤                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-25857      │ HIGH     │                   │ 1.31                                            │ Denial of Service due to missing nested depth limitation for │
+│                                                              │                     │          │                   │                                                 │ collections                                                  │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-25857                   │
+│                                                              ├─────────────────────┼──────────┤                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-38749      │ MEDIUM   │                   │                                                 │ Uncaught exception in                                        │
+│                                                              │                     │          │                   │                                                 │ org.yaml.snakeyaml.composer.Composer.composeSequenceNode     │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-38749                   │
+│                                                              ├─────────────────────┤          │                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-38750      │          │                   │                                                 │ Uncaught exception in                                        │
+│                                                              │                     │          │                   │                                                 │ org.yaml.snakeyaml.constructor.BaseConstructor.constructObj- │
+│                                                              │                     │          │                   │                                                 │ ect                                                          │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-38750                   │
+│                                                              ├─────────────────────┤          │                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-38751      │          │                   │                                                 │ Uncaught exception in                                        │
+│                                                              │                     │          │                   │                                                 │ java.base/java.util.regex.Pattern$Ques.match                 │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-38751                   │
+│                                                              ├─────────────────────┤          │                   ├─────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-38752      │          │                   │ 1.32                                            │ Uncaught exception in java.base/java.util.ArrayList.hashCode │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-38752                   │
+│                                                              ├─────────────────────┤          │                   │                                                 ├──────────────────────────────────────────────────────────────┤
+│                                                              │ CVE-2022-41854      │          │                   │                                                 │ DoS via stack overflow                                       │
+│                                                              │                     │          │                   │                                                 │ https://avd.aquasec.com/nvd/cve-2022-41854                   │
+└──────────────────────────────────────────────────────────────┴─────────────────────┴──────────┴───────────────────┴─────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────┘
+oscaranadon@MacBook-Air-de-Oscar ola % grype acciona-ov-back-invoice-1.0.0.jar 
+ ✔ Vulnerability DB        [updated]
+ ✔ Indexed acciona-ov-back-invoice-1.0.0.jar 
+ ✔ Cataloged packages      [242 packages]
+ ✔ Scanning image...       [64 vulnerabilities]
+   ├── 7 critical, 17 high, 36 medium, 4 low, 0 negligible
+   └── 21 fixed
+NAME                         INSTALLED       FIXED-IN        TYPE          VULNERABILITY        SEVERITY 
+ant                          1.9.15                          java-archive  CVE-2021-36373       Medium    
+ant                          1.9.15                          java-archive  CVE-2021-36374       Medium    
+ant-antlr                    1.9.15                          java-archive  CVE-2021-36373       Medium    
+ant-antlr                    1.9.15                          java-archive  CVE-2021-36374       Medium    
+ant-junit                    1.9.15                          java-archive  CVE-2021-36373       Medium    
+ant-junit                    1.9.15                          java-archive  CVE-2021-36374       Medium    
+ant-launcher                 1.9.15                          java-archive  CVE-2021-36373       Medium    
+ant-launcher                 1.9.15                          java-archive  CVE-2021-36374       Medium    
+commons-fileupload           1.4                             java-archive  CVE-2023-24998       High      
+commons-fileupload           1.4             1.5             java-archive  GHSA-hfrx-6qgj-fp6c  High      
+groovy                       2.5.12          2.5.14          java-archive  GHSA-rcjj-h6gh-jf3r  Medium    
+gson                         2.8.6                           java-archive  CVE-2022-25647       High      
+gson                         2.8.6           2.8.9           java-archive  GHSA-4jrv-ppp4-jm57  High      
+guava                        29.0-android                    java-archive  CVE-2020-8908        Low       
+guava                        29.0-android                    java-archive  GHSA-5mg8-w23w-74h3  Low       
+httpclient                   4.5.12                          java-archive  CVE-2020-13956       Medium    
+httpclient                   4.5.12          4.5.13          java-archive  GHSA-7r82-7xv7-xcpj  Medium    
+jackson-databind             2.11.0                          java-archive  CVE-2020-36518       High      
+jackson-databind             2.11.0                          java-archive  CVE-2022-42003       High      
+jackson-databind             2.11.0                          java-archive  CVE-2022-42004       High      
+jackson-databind             2.11.0          2.12.6          java-archive  GHSA-3x8x-79m2-3w2w  High      
+jackson-databind             2.11.0          2.12.6.1        java-archive  GHSA-57j2-w4cx-62h2  High      
+jackson-databind             2.11.0          2.12.7.1        java-archive  GHSA-jjjh-jjxp-wpff  High      
+jackson-databind             2.11.0          2.12.7.1        java-archive  GHSA-rgv9-q543-rqg4  High      
+json                         20160212        20230227        java-archive  GHSA-3vqj-43w4-2q58  High      
+junit                        4.13            4.13.1          java-archive  GHSA-269g-pwp5-87pp  Medium    
+log4j-api                    2.13.3                          java-archive  CVE-2021-44832       Medium    
+log4j-api                    2.13.3                          java-archive  CVE-2021-45105       Medium    
+log4j-to-slf4j               2.13.3                          java-archive  CVE-2021-44832       Medium    
+log4j-to-slf4j               2.13.3                          java-archive  CVE-2021-45105       Medium    
+logback-core                 1.2.3           1.2.9           java-archive  GHSA-668q-qrv7-99fm  Medium    
+postgresql                   42.2.14                         java-archive  CVE-2017-8806        Medium    
+snakeyaml                    1.26            1.31            java-archive  GHSA-3mc7-4q67-w48m  High      
+snakeyaml                    1.26            1.31            java-archive  GHSA-98wm-3w3q-mw94  Medium    
+snakeyaml                    1.26            1.31            java-archive  GHSA-c4r9-r8fh-9vj2  Medium    
+snakeyaml                    1.26            1.31            java-archive  GHSA-hhhw-99gj-p3c3  Medium    
+snakeyaml                    1.26            1.32            java-archive  GHSA-9w3m-gqgf-c4p9  Medium    
+snakeyaml                    1.26            1.32            java-archive  GHSA-w37g-rhq8-7m4j  Medium    
+snakeyaml                    1.26            2.0             java-archive  GHSA-mjmj-j48q-9wg2  High      
+spring-cloud-openfeign-core  2.2.3.RELEASE   2.2.10          java-archive  GHSA-pf94-6v2v-cm3j  High      
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2016-1000027     Critical  
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2020-5421        Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2021-22060       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2021-22096       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2021-22118       High      
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2022-22950       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2022-22965       Critical  
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2022-22968       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2022-22970       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2022-22971       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2023-20861       Medium    
+spring-core                  5.2.7.RELEASE                   java-archive  CVE-2023-20863       Medium    
+thymeleaf-spring5            3.0.11.RELEASE  3.0.13.RELEASE  java-archive  GHSA-qcj6-jqrg-4wp2  Critical  
+tika-core                    1.24.1                          java-archive  CVE-2021-28657       Medium    
+tika-core                    1.24.1                          java-archive  CVE-2022-25169       Medium    
+tika-core                    1.24.1                          java-archive  CVE-2022-30126       Medium    
+tika-core                    1.24.1                          java-archive  CVE-2022-30973       Medium    
+tika-core                    1.24.1                          java-archive  CVE-2022-33879       Low       
+woodstox-core                6.2.0                           java-archive  CVE-2022-40152       High      
+woodstox-core                6.2.0           6.4.0           java-archive  GHSA-3f7h-mf4q-vrm4  Low       
+oscaranadon@MacBook-Air-de-Oscar ola % 

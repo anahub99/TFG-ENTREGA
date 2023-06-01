@@ -1,0 +1,8 @@
+$ kubectl apply --filename app.yaml --namespace prod-gatekepeer
+deployment .apps/devops-toolkit created
+ingress.networking.k8s.io/devops-toolkit created
+Error from server ([denied by block-node-port]  User is not allowed to create service of type NodePort): error when creating "app.yaml": admission webhook "validation.gatekeeper.sh" denied the request [denied by block
+-node-port] User is not allowed to create service of type nodeport
+
+ 
+ 

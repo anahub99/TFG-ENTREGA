@@ -1,0 +1,51 @@
+#########################################################
+#  Proceso de instalación y arranque para sistema macOS #
+#########################################################
+
+Se ha sgeuido el tutorial de https://developer.hashicorp.com/vault/tutorials/getting-started-ui/getting-started-ui
+
+
+Instalacion de Hashicorp Tap, un repositorio con todos los paquetes de Homebrew
+$ brew tap hashicorp/tap
+
+Instalación de Vault con hashicorp/tap/vault
+$ brew install hashicorp/tap/vault
+
+Se verifica la instalación ejecutando el siguiente comando:
+$ vault
+
+Se crea el fichero de configuración del servidor (config.hcl)
+
+$ tee config.hcl <<EOF
+ui = true
+disable_mlock = true
+
+storage "raft" {
+  path    = "./vault/data"
+  node_id = "node1"
+}
+
+listener "tcp" {
+  address     = "0.0.0.0:8200"
+  tls_disable = "true"
+}
+
+api_addr = "http://127.0.0.1:8200"
+cluster_addr = "https://127.0.0.1:8201"
+EOF
+
+Se crea el directorio ./vault/data para el almacenamiento del backend
+$ mkdir -p vault/data
+
+Se lanza el servidor empleando la codnfiguración anterior
+$ vault server -config=config.hcl
+
+En un buscador se accede a la direccion http://127.0.0.1:8200/ui
+
+Se seleccionan el numero de llaves y el numero de personas que las custodian
+
+Se procede al unseald para poder realizar modificaciones, se recomienda descargar el fichero con las llaves
+
+A continuacion pedira un numero de llaves (3 como se ha especificado anteriormente)
+
+Seguidamente pedira el root_token, se introduce y ya será posible realizar modificacioens

@@ -1,0 +1,8 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: bootstrap-issuer
+  namespace: mtls-demo
+spec:
+  selfSigned: { }

@@ -1,0 +1,15 @@
+Ubuntu
+Trivy: Total: 24 (UNKNOWN: 0, LOW: 15, MEDIUM: 9, HIGH: 0, CRITICAL: 0)
+Grype: [24 vulnerabilities] low = 7, medium =9, negligible =8, high = 
+
+Nginx
+Trivy: Total: 147 (UNKNOWN: 0, LOW: 95, MEDIUM: 25, HIGH: 22, CRITICAL: 5)
+Grype: [149 vulnerabilities] low = 5, medium = 5, negligible = 23, 
+
+Redis
+Trivy: Total: 77 (UNKNOWN: 0, LOW: 62, MEDIUM: 0, HIGH: 12, CRITICAL: 3) 3 (UNKNOWN: 0, LOW: 0, MEDIUM: 2, HIGH: 1, CRITICAL: 0)
+Grype:  ✔ Scanned image           [81 vulnerabilities]
+
+Alpine
+Trivy: Total: 2 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+Grypie:    [2 vulnerabilities]80

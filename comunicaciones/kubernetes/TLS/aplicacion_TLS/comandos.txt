@@ -1,0 +1,12 @@
+$ kubectl apply -f namespace.yaml
+
+$ kubectl apply -f redis-server.yaml
+
+$ kubectl exec deployment/redis-server -n mtls-demo -- redis-cli ping
+
+$ kubectl apply -f client-app.yaml
+
+$ kubectl port-forward svc/spring-boot-redis-client-app 8080:8080 -n mtls-demo
+
+$ curl -XGET http://localhost:8080/
+

@@ -1,0 +1,51 @@
+A continuacion serán explicadas algunas de las politicas aplicables por Kyverno:
+
+En primer modo se va el funcionamiento de una polica tipo Allow (deny en este caso).
+El nombre de esta policy en Kyverno es allowed-label-changes, esta impide que se modifiquen etiquetas que no estén con la key breakglass. En algunas operaciones es necesario impidir la modificación de determinados recursos por ceustiones especificas, uno de ellos pueden ser las labels.
+
+
+A continuacion se ha creado un sencillo pod cuya tarea es comportarse como un servidor de tipo nginx
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+     name: nginxCambioImposible
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+Una vez aplicado se pueden comprar sus caracteristicas, en este caso lo que interesa es la etiqueta
+oscaranadon@MacBook-Air-de-Oscar kyverno % kubectl get pod nginx --show-labels         
+NAME    READY   STATUS    RESTARTS   AGE   LABELS
+nginx   1/1     Running   0          84s   name=nginx
+
+Se observa que esta es nginx, como ahora no hay ninguna politica establecida, se puede modificar a su gusto, por ejemplo editando el fichero de dicho pod.
+
+No obstante, una vez instaladas las politicas mediante:oscaranadon@MacBook-Air-de-Oscar kyverno % kubectl apply -f allowed-label-changes.yaml                                                 
+clusterpolicy.kyverno.io/allowed-label-changes created
+
+Será imposible modificar ninguna de estas, inentandolo aparecerá un mensaje similiar a este indicando qu eexiste una politica que lo impide
+
+oscaranadon@MacBook-Air-de-Oscar kyverno % kubectl apply -f pod-label.yaml 
+                       
+Error from server: error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"v1\",\"kind\":\"Pod\",\"metadata\":{\"annotations\":{},\"labels\":{\"name\":\"nginxCambioImposible\"},\"name\":\"nginx\",\"namespace\":\"default\"},\"spec\":{\"containers\":[{\"image\":\"nginx\",\"name\":\"nginx\",\"ports\":[{\"containerPort\":80}]}]}}\n"},"labels":{"name":"nginxCambioImposible"}}}
+to:
+Resource: "/v1, Resource=pods", GroupVersionKind: "/v1, Kind=Pod"
+Name: "nginx", Namespace: "default"
+for: "pod-label.yaml": admission webhook "validate.kyverno.svc-fail" denied the request: 
+
+resource Pod/default/nginx was blocked due to the following policies
+
+allowed-label-changes:
+  safe-label: The only label that may be removed or changed is `breakglass`.
+
+En caso de querer revocar la politica pertinente unicamente habrá que realizar
+# kubectl -f <policy-name>.yaml
+
+Como se atiende, el implementar politicas con Kyverno es cuanto menos sencillo.

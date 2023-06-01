@@ -1,0 +1,19 @@
+# Politica para controlar el trafico que recibe cada servicio en istio
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mi-servicio
+spec:
+  hosts:
+  - mi-servicio
+  http:
+  - route:
+    - destination:
+        host: oscar-servicio
+        subset: v1
+      weight: 80
+    - destination:
+        host: mi-servicio
+        subset: v2
+      weight: 20
+∫

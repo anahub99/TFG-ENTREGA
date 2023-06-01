@@ -1,0 +1,22 @@
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl exec --stdin=true --tty=true vault-0 -- /bin/sh
+/ $ vault auth enable kubernetes
+Success! Enabled kubernetes auth method at: kubernetes/
+/ $ vault write auth/kubernetes/config \
+>     kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
+Success! Data written to: auth/kubernetes/config
+/ $ vault policy write webapp - <<EOF
+> path "secret/data/webapp/config" {
+>   capabilities = ["read"]
+> }
+> EOF
+Success! Uploaded policy: webapp
+/ $ vault write auth/kubernetes/role/webapp \
+>         bound_service_account_names=vault \
+>         bound_service_account_namespaces=default \
+>         policies=webapp \
+>         ttl=24h
+Success! Data written to: auth/kubernetes/role/webapp
+/ $ exit
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % 
+
+

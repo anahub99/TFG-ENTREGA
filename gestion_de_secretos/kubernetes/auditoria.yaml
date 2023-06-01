@@ -1,0 +1,21 @@
+# Ejemplo de auditoria que registra evento de creacion, actualizacion y eliminacion de objetos
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+  - level: Metadata
+    resources:
+    - group: ""
+      resources:
+      - "*"
+    verbs:
+    - create
+    - patch
+    - update
+    - delete
+  - level: Request
+    resources:
+    - group: ""
+      resources:
+      - "*"
+    verbs:
+    - create

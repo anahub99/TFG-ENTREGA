@@ -1,0 +1,38 @@
+oscaranadon@MacBook-Air-de-Oscar kubernetes % kubectl get pod constraints-cpu-demo --namespace=constraints-cpu-example
+oscaranadon@MacBook-Air-de-Oscar kubernetes % touch good-pod.yaml
+oscaranadon@MacBook-Air-de-Oscar kubernetes % touch bad-pod.yaml
+oscaranadon@MacBook-Air-de-Oscar kubernetes % open good-pod.yaml 
+oscaranadon@MacBook-Air-de-Oscar kubernetes % kubectl apply -f good-pod.yaml 
+pod/constraints-cpu-demo created
+oscaranadon@MacBook-Air-de-Oscar kubernetes % kubectl apply -f bad-pod.yaml
+The Pod "constraints-cpu-demo" is invalid: spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`, `spec.initContainers[*].image`, `spec.activeDeadlineSeconds`, `spec.tolerations` (only additions to existing tolerations) or `spec.terminationGracePeriodSeconds` (allow it to be set to 1 if it was previously negative)
+  core.PodSpec{
+  	Volumes:        {{Name: "kube-api-access-4gkwk", VolumeSource: {Projected: &{Sources: {{ServiceAccountToken: &{ExpirationSeconds: 3607, Path: "token"}}, {ConfigMap: &{LocalObjectReference: {Name: "kube-root-ca.crt"}, Items: {{Key: "ca.crt", Path: "ca.crt"}}}}, {DownwardAPI: &{Items: {{Path: "namespace", FieldRef: &{APIVersion: "v1", FieldPath: "metadata.namespace"}}}}}}, DefaultMode: &420}}}},
+  	InitContainers: nil,
+  	Containers: []core.Container{
+  		{
+  			... // 6 identical fields
+  			EnvFrom: nil,
+  			Env:     nil,
+  			Resources: core.ResourceRequirements{
+- 				Limits: core.ResourceList{
+- 					s"cpu": {i: resource.int64Amount{value: 2500, scale: -3}, s: "2500m", Format: "DecimalSI"},
+- 				},
++ 				Limits: core.ResourceList{
++ 					s"cpu": {i: resource.int64Amount{value: 800, scale: -3}, s: "800m", Format: "DecimalSI"},
++ 				},
+- 				Requests: core.ResourceList{s"cpu": {i: resource.int64Amount{value: 2000, scale: -3}, Format: "DecimalSI"}},
++ 				Requests: core.ResourceList{
++ 					s"cpu": {i: resource.int64Amount{value: 500, scale: -3}, s: "500m", Format: "DecimalSI"},
++ 				},
+  			},
+  			VolumeMounts:  {{Name: "kube-api-access-4gkwk", ReadOnly: true, MountPath: "/var/run/secrets/kubernetes.io/serviceaccount"}},
+  			VolumeDevices: nil,
+  			... // 11 identical fields
+  		},
+  	},
+  	EphemeralContainers: nil,
+  	RestartPolicy:       "Always",
+  	... // 26 identical fields
+  }
+

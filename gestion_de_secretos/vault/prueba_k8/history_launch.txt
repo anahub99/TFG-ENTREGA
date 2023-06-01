@@ -1,0 +1,39 @@
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % touch history_launch.txt
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % touch deployment-01-webapp.yml
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % open deployment-01-webapp.yml open deployment-01-webapp.yml
+The file /Users/oscaranadon/Desktop/TFG/gestion_de_secretos/vault/prueba_k8/open does not exist.
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl apply --filename deployment-01-webapp.yml
+deployment.apps/webapp created
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get pods
+NAME                                    READY   STATUS              RESTARTS   AGE
+vault-0                                 1/1     Running             0          13m
+vault-1                                 1/1     Running             0          13m
+vault-2                                 1/1     Running             0          13m
+vault-agent-injector-644f4c4757-4tdjq   1/1     Running             0          13m
+webapp-59bbf5c744-bzgvw                 0/1     ContainerCreating   0          6s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get pods
+NAME                                    READY   STATUS              RESTARTS   AGE
+vault-0                                 1/1     Running             0          13m
+vault-1                                 1/1     Running             0          13m
+vault-2                                 0/1     Running             0          13m
+vault-agent-injector-644f4c4757-4tdjq   1/1     Running             0          13m
+webapp-59bbf5c744-bzgvw                 0/1     ContainerCreating   0          31s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % 
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % 
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % 
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get pods
+NAME                                    READY   STATUS              RESTARTS   AGE
+vault-0                                 1/1     Running             0          13m
+vault-1                                 1/1     Running             0          13m
+vault-2                                 1/1     Running             0          13m
+vault-agent-injector-644f4c4757-4tdjq   1/1     Running             0          13m
+webapp-59bbf5c744-bzgvw                 0/1     ContainerCreating   0          45s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % kubectl get pods
+NAME                                    READY   STATUS    RESTARTS   AGE
+vault-0                                 1/1     Running   0          14m
+vault-1                                 1/1     Running   0          14m
+vault-2                                 1/1     Running   0          14m
+vault-agent-injector-644f4c4757-4tdjq   1/1     Running   0          14m
+webapp-59bbf5c744-bzgvw                 1/1     Running   0          101s
+oscaranadon@MacBook-Air-de-Oscar prueba_k8 % curl http://localhost:8080
+password:safePassword username:oscarUser %                                                       oscaranadon@MacBook-Air-de-Oscar prueba_k8 % 

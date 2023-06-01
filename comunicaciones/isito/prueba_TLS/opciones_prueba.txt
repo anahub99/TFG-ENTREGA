@@ -1,0 +1,4 @@
+# cuidado porque en el enlace de prueba las opciones que marcan ya no van
+$ istioctl install --set profile=demo --set meshConfig.enableAutoMtls=true
+$ istioctl install --set profile=demo --set meshConfig.enableAutoMtls=false
+

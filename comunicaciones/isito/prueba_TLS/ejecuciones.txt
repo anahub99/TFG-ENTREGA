@@ -1,0 +1,37 @@
+# Creaciómn de los namespaces y despliegue de los workload
+kubectl create ns full
+kubectl apply -f <(istioctl kube-inject -f httpbin.yaml) -n full
+kubectl apply -f <(istioctl kube-inject -f sleep.yaml) -n full
+
+
+kubectl create ns full
+kubectl apply -f <(istioctl kube-inject -f httpbin.yaml) -n legacy
+kubectl apply -f <(istioctl kube-inject -f sleep.yaml) -n legacy
+
+kubectl create ns partial
+kubectl apply -f <(istioctl kube-inject -f httpbin.yaml) -n partial
+cat <<EOF | kubectl apply -n partial -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin-nosidecar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpbin
+  template:
+    metadata:
+      labels:
+        app: httpbin
+        version: nosidecar
+    spec:
+      containers:
+      - image: docker.io/kennethreitz/httpbin
+        imagePullPolicy: IfNotPresent
+        name: httpbin
+        ports:
+        - containerPort: 80
+EOF
+
+
