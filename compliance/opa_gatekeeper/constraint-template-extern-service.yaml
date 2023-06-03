@@ -1,0 +1,37 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sexternaldata
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sExternalData
+      validation:
+        legacySchema: true
+        openAPIV3Schema:
+          properties:
+            labels:
+              items:
+                type: string
+              type: array
+  targets:
+    - rego: |
+        package K8sExternalDataCosign
+        violation[{"msg": msg}] {
+          # build a list of keys containing images
+          images := [img | img = input.review.object.spec.template.spec.containers[_].image]
+          # send external data request
+          response := external_data({"provider": "my-provider", "keys": images})
+          response_with_error(response)
+          msg := sprintf("invalid response: %v", [response])
+        }
+        response_with_error(response) {
+		          count(response.errors) > 0
+          errs := response.errors[_]
+          contains(errs[1], "_invalid")
+        }
+        response_with_error(response) {
+          count(response.system_error) > 0
+        }
+      target: admission.k8s.gatekeeper.sh
